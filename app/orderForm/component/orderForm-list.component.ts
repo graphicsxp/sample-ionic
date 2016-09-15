@@ -4,7 +4,7 @@ import { NavController, ModalController } from 'ionic-angular';
 import { OrderFormDetailComponent } from './orderForm-detail.component';
 import { OrderFormService } from '../service/orderForm-service';
 import { LoadingService } from '../../shared/service/loading-service';
-import { FileOpener } from 'ionic-native';
+import { Vibration, Transfer, File, FileOpener } from 'ionic-native';
 //import * as  _ from 'lodash';
 
 
@@ -17,14 +17,13 @@ export class OrderFormListComponent
 
     orderForms: IOrderForm[] = [];
     errorMessage: string;
-   
+    deviceStorage: number;
 
     constructor(private _orderFormService: OrderFormService,
         private _modalCtrl: ModalController,
         private _navCtrl: NavController) { }
 
     ngOnInit(): void {
-        FileOpener.open('https://1drv.ms/b/s!Ai7himO_T6ekg5kGmXTDc05VfLnD8Q', 'PDF');
         this._orderFormService.getOrderForms()
             .subscribe(
             orderForms => {
@@ -35,6 +34,8 @@ export class OrderFormListComponent
             },
             error => this.errorMessage = <any>error
             );
+
+        //File.getFreeDiskSpace().then((res) => { this.deviceStorage  = res; })
     }
 
     itemSelected(item: IOrderForm): void {
@@ -44,6 +45,24 @@ export class OrderFormListComponent
     }
 
     openOrderForm(item: IOrderForm): void {
-        
+        console.log('clicking on icon');
+
+        let fileTransfer: Transfer = new Transfer();
+        // var cordova: any;
+        // const fs:string = cordova.file.dataDirectory;
+        let targetPath = cordova.file.externalDataDirectory + 'myOrderForm.pdf';
+
+        fileTransfer.download('http://www.pretty-story.com/wp-content/uploads/doc.pdf', targetPath).then((res) => {
+            console.log('the file was downloaded successfully:' + res);
+            FileOpener.open(targetPath, 'application/pdf').then((res) => {
+                console.log('the file was opened successfully:' + res);
+            }).catch(err => {
+                console.log('an error occured while opening the file:' + err)
+            });
+            Vibration.vibrate(1500);
+        }).catch((err) => {
+            console.log('an error occured while downloading the file:' + err)
+            Vibration.vibrate(100);
+        });
     }
 }
