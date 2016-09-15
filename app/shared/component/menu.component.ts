@@ -13,6 +13,7 @@ export class MenuComponent {
     @Input() content: string;
     @Output() menuClicked: EventEmitter<string> = new EventEmitter<string>();
     pages: Array<{ title: string, component: any }>;
+    username: string;
 
     constructor(private _auth: Auth, private _user: User, private _menuCtrl: MenuController) {
 
@@ -29,15 +30,26 @@ export class MenuComponent {
             menu,
             { title: 'Order Forms', component: OrderFormListComponent }
         ];
+
+        this.username = this._user.details.username;
     }
 
-    openPage(page) {
+    openPage(component) {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
-        if (page.component) {
-            this.nav.setRoot(page.component);
-        } else {
-            this._menuCtrl.close();
+        switch (component) {
+            case 'OrderFormListComponent':
+                this.nav.setRoot(OrderFormListComponent);
+                break;
+            case '':
+                this._menuCtrl.close();
+                break;
         }
+    }
+
+    logout(){
+        this._auth.logout();
+        this.nav.setRoot(LoginComponent);
+        this._menuCtrl.close();
     }
 }

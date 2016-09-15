@@ -14,8 +14,8 @@ import {Auth, User, CloudSettings, provideCloud} from '@ionic/cloud-angular';
 export class LoginComponent {
     signingUp: boolean = true;
     name: string;
-    email: string;
-    password: string;
+    email: string = 'graphicsxp@gmail.com';
+    password: string = 'welcome1';
     confirmPassword: string;
     errorMessage: string;
 
