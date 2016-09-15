@@ -4,6 +4,7 @@ import { NavController, ModalController } from 'ionic-angular';
 import { OrderFormDetailComponent } from './orderForm-detail.component';
 import { OrderFormService } from '../service/orderForm-service';
 import { LoadingService } from '../../shared/service/loading-service';
+import { FileOpener } from 'ionic-native';
 //import * as  _ from 'lodash';
 
 
@@ -16,13 +17,14 @@ export class OrderFormListComponent
 
     orderForms: IOrderForm[] = [];
     errorMessage: string;
+   
 
     constructor(private _orderFormService: OrderFormService,
         private _modalCtrl: ModalController,
         private _navCtrl: NavController) { }
 
     ngOnInit(): void {
-
+        FileOpener.open('https://1drv.ms/b/s!Ai7himO_T6ekg5kGmXTDc05VfLnD8Q', 'PDF');
         this._orderFormService.getOrderForms()
             .subscribe(
             orderForms => {
@@ -39,5 +41,9 @@ export class OrderFormListComponent
         this._navCtrl.push(OrderFormDetailComponent, { id: item.id })
         //let modal = this._modalCtrl.create(OrderFormDetailComponent, item);
         //modal.present();
+    }
+
+    openOrderForm(item: IOrderForm): void {
+        
     }
 }

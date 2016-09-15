@@ -5,6 +5,7 @@ import { LoginService } from '../service/login-service';
 import { OrderFormListComponent } from '../../orderForm/component/orderForm-list.component'
 
 import {Auth, User, CloudSettings, provideCloud} from '@ionic/cloud-angular';
+import { Camera } from 'ionic-native';
 
 
 @Component({
@@ -55,5 +56,12 @@ export class LoginComponent {
                 }
             }
         });
+    }
+
+    takePhoto(){
+        Camera.getPicture().then(
+            res => console.log("We have taken a picture!"),
+            err => console.error("Error taking picture", err)
+        );
     }
 }

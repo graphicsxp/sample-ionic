@@ -6,7 +6,7 @@ import { LoadingService } from '../../shared/service/loading-service';
 
 @Injectable()
 export class OrderFormService {
-    private _orderFormUrl = 'build/api/orderforms/orderforms.json';
+    private _orderFormUrl = 'build/api/orderForms/orderForms.json';
     private _loadingService: LoadingService;
     
     constructor(private _http: Http,  @Inject(LoadingService) loadingService: LoadingService) { 
