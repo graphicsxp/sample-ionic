@@ -1,19 +1,57 @@
-<ion-list>
+<ion-card *ngIf="!signingUp">
+  <ion-list>
 
-  <ion-item>
-    <ion-label floating>Username</ion-label>
-    <ion-input [(ngModel)]="username" type="text" value=""></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input [(ngModel)]="email" type="text" value=""></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input [(ngModel)]="password"  type="password" value=""></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [(ngModel)]="password" type="password" value=""></ion-input>
+    </ion-item>
 
-</ion-list>
+  </ion-list>
 
-<div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
 
-<div padding>
-  <button primary block  (click)="login()">Sign In</button>
-</div>
+  <div padding>
+    <button primary block (click)="login()">Sign In</button>
+  </div>
+</ion-card>
+
+
+<ion-card *ngIf="signingUp">
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input [(ngModel)]="name" type="text" value=""></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input [(ngModel)]="email" type="text" value=""></ion-input>
+    </ion-item> 
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [(ngModel)]="password" type="password" value=""></ion-input>
+    </ion-item>
+
+     <ion-item>
+      <ion-label floating>Confirm password</ion-label>
+      <ion-input [(ngModel)]="confirmPassword" type="password" value=""></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <div class='has-error' *ngIf='errorMessage'>{{errorMessage}}</div>
+
+  <div padding>
+    <button primary block (click)="signup()">Sign up</button>
+  </div>
+
+  <a  class='positive' (click)="signingUp = !signingUp"> Already have an account ? </a>
+  
+</ion-card>

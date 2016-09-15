@@ -12,11 +12,15 @@ import {Auth, User, CloudSettings, provideCloud} from '@ionic/cloud-angular';
     providers: [LoginService]
 })
 export class LoginComponent {
-    username: string;
+    signingUp: boolean = true;
+    name: string;
+    email: string;
     password: string;
+    confirmPassword: string;
     errorMessage: string;
 
-    constructor(private _loginService: LoginService, private _navController: NavController, private _platform: Platform, private http: Http, private auth:Auth, private user:User) { }
+    constructor(private _loginService: LoginService, private _navController: NavController, private _auth: Auth) { }
+
 
     login() {
         // this._loginService.login(this.username, this.password).subscribe(
@@ -30,18 +34,26 @@ export class LoginComponent {
         //     }
         // )
 
-        let details: any = { 'email': 'hi@ionic.io', 'password': 'puppies123' };
-
-        this.auth.login("basic", details).then((res) => {
+        this._auth.login("basic", { 'email': this.email, 'password': this.password }).then((res) => {
             this._navController.setRoot(OrderFormListComponent);
-        }, () => {
-            // for (let e of err.details) {
-            //     if (e === 'conflict_email') {
+        }, (err) => {
+            alert('Authentication failed.');
+        });
+    }
+
+    signup() {
+        this._auth.signup({ 'name': this.name, 'email': this.email, 'password': this.password }).then(() => {
+            return this._auth.login('basic', { 'email': this.email, 'password': this.password }).then(() => {
+                this._navController.setRoot(OrderFormListComponent);
+            });
+        }, (err) => {
+            for (let e of err.details) {
+                if (e === 'conflict_email') {
                     alert('Email already exists.');
-                //} else {
-                    // handle other errors
-                //}
+                } else {
+                    //handle other errors
+                }
             }
-        );
+        });
     }
 }
