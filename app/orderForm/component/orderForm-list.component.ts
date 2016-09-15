@@ -4,7 +4,7 @@ import { NavController, ModalController } from 'ionic-angular';
 import { OrderFormDetailComponent } from './orderForm-detail.component';
 import { OrderFormService } from '../service/orderForm-service';
 import { LoadingService } from '../../shared/service/loading-service';
-import { Vibration, Transfer, File, FileOpener } from 'ionic-native';
+import { Vibration, Badge, Transfer, File, FileOpener } from 'ionic-native';
 //import * as  _ from 'lodash';
 
 
@@ -39,6 +39,7 @@ export class OrderFormListComponent
     }
 
     itemSelected(item: IOrderForm): void {
+        Badge.increase(1);
         this._navCtrl.push(OrderFormDetailComponent, { id: item.id })
         //let modal = this._modalCtrl.create(OrderFormDetailComponent, item);
         //modal.present();
