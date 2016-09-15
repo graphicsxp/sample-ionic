@@ -52,7 +52,7 @@ export class OrderFormListComponent
         // const fs:string = cordova.file.dataDirectory;
         let targetPath = cordova.file.externalDataDirectory + 'myOrderForm.pdf';
 
-        fileTransfer.download('http://www.pretty-story.com/wp-content/uploads/doc.pdf', targetPath).then((res) => {
+        fileTransfer.download('http://www.sam-dev.net/wp-content/uploads/doc.pdf', targetPath).then((res) => {
             console.log('the file was downloaded successfully:' + res);
             FileOpener.open(targetPath, 'application/pdf').then((res) => {
                 console.log('the file was opened successfully:' + res);
